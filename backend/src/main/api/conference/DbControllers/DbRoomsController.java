@@ -13,12 +13,12 @@ import java.util.Optional;
 /**
  * Created by rain on 16/02/2017.
  */
-public class DbController {
+public class DbRoomsController {
     private final String driver = "org.sqlite.JDBC";
     private final String dbName = "database/database.db";
     private final String dbUrl = "jdbc:sqlite:" + dbName;
 
-    public DbController() {
+    public DbRoomsController() {
     }
 
     private Optional<Connection> connect() {
@@ -60,7 +60,6 @@ public class DbController {
         Connection connection = connect().orElse(null);
         String query = "SELECT * FROM rooms WHERE room_id=" + id;
         List<Room> rooms = executeQuery(connection, query);
-        Room room = rooms.size() > 0 ? rooms.get(0) : null;
-        return  room;
+        return  rooms.size() > 0 ? rooms.get(0) : null;
     }
 }
