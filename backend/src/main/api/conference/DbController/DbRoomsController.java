@@ -55,4 +55,12 @@ public class DbController {
         String query = "SELECT * FROM rooms";
         return  executeQuery(connection, query);
     }
+
+    public Room getRoomById(int id) {
+        Connection connection = connect().orElse(null);
+        String query = "SELECT * FROM rooms WHERE room_id=" + id;
+        List<Room> rooms = executeQuery(connection, query);
+        Room room = rooms.size() > 0 ? rooms.get(0) : null;
+        return  room;
+    }
 }
