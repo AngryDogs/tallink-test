@@ -1,10 +1,8 @@
 import { combineReducers } from 'redux';
-import allRooms from './allRoomsReducer';
-import singleRoom from './singleRoomReducer';
-import singleConference from './singleConferenceReducer';
+import roomReducer from './roomReducer';
+import conferenceReducer from './conferenceReducer';
 
 export default combineReducers({
-  allRooms,
-  singleRoom,
-  singleConference
+  roomReducer,
+  conferenceReducer,
 });

@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import Navbar from '../components/Navbar';
-import AllConferenceRooms from '../components/ConferenceRooms';
+import AllRooms from '../components/AllRooms';
 import { identity } from 'lodash';
 import { connect } from 'react-redux';
-import { allRooms } from '../actions/allRoomsAction';
 
 class LandingPage extends Component {
 
@@ -14,18 +13,12 @@ class LandingPage extends Component {
     }
   }
 
-  componentWillMount() {
-    const { dispatch } = this.props;
-    dispatch(allRooms());
-  }
-
   render() {
-    const { allRooms } = this.props;
     return (
       <div>
         <Navbar />
         <div className="container custom-container">
-           <AllConferenceRooms data={allRooms.result} />
+           <AllRooms />
         </div>
       </div>
     )

@@ -14,17 +14,23 @@ export function getRoomById(id) {
   });
 }
 
-export function deleteRoomById(id) {
-  
-}
-
-export function getConferenceById(id) {
-  return axios.get('http://localhost:8080/conference/' + id)
+export function getConferenceById(roomId, conId) {
+  return axios.get('http://localhost:8080/rooms/' + roomId + '/conference/' + conId)
   .catch(err => {
     console.log(err);
   });
 }
 
-export function deleteConferenceById(id) {
+export function deleteConferenceById(roomId, conId) {
+  return axios.delete('http://localhost:8080/rooms/' + roomId + '/conference/delete/' + conId)
+  .catch(err => {
+    console.log(err);
+  });
+}
 
+export function deleteParticipantById(id) {
+  return axios.delete('http://localhost:8080/participant/' + id)
+  .catch(err => {
+    console.log(err);
+  });
 }

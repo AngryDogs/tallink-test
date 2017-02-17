@@ -1,4 +1,4 @@
-package conference.DbController;
+package conference.DbControllers;
 
 import conference.Objects.Room;
 
@@ -50,6 +50,15 @@ public class DbRoomsController {
         return rooms;
     }
 
+    private void updateQuery(Connection connection, String query) {
+        try{
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(query);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public List<Room> getRooms() {
         Connection connection = connect().orElse(null);
         String query = "SELECT * FROM rooms";
@@ -61,5 +70,11 @@ public class DbRoomsController {
         String query = "SELECT * FROM rooms WHERE room_id=" + id;
         List<Room> rooms = executeQuery(connection, query);
         return  rooms.size() > 0 ? rooms.get(0) : null;
+    }
+
+    public void deleteRoomById(int id) {
+        Connection connection = connect().orElse(null);
+        String query = "DELETE FROM rooms WHERE room_id=" + id;
+        updateQuery(connection, query);
     }
 }
