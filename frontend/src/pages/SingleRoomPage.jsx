@@ -32,7 +32,7 @@ class SingleRoomPage extends Component {
         <button
           className="btn"
           onClick={event => this.handleNewConference(event)}>
-          Add new
+          Add new conference
         </button>
       </div>
     ) : (<h1>Nothing to show here</h1>);

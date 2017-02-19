@@ -36,7 +36,7 @@ class SingleConferencePage extends Component {
       <button
         className="btn"
         onClick={event => this.handleNewParticipant(event)}>
-        Add new
+        Add new participant
       </button>
     )
 
@@ -53,7 +53,7 @@ class SingleConferencePage extends Component {
       <ParticipantModal
         roomId={this.props.params.roomId}
         conId={this.props.params.conId} /> : '';
-        
+
     return (
       <div>
         <Navbar />
