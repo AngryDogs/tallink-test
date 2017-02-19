@@ -12,7 +12,12 @@ class ConferenceModal extends Component {
     super(props);
     this.state = {
       date: moment(),
+      error: '',
     }
+  }
+
+  isInputValid(name, time) {
+    return name.value.length > 0 && time.value.length > 0;
   }
 
   handleDateChange = (date) => {
@@ -26,12 +31,25 @@ class ConferenceModal extends Component {
 
   handleSaveConference() {
     const { dispatch, roomId } = this.props;
-    dispatch(addConferenceToRoom({
-      conferenceName: this.refs.name.value.trim(),
-      conferenceDate: this.state.date.format("YYYY-MM-DD HH:mm"),
-      roomId,
-    }, roomId));
-    this.handleCloseModal();
+    const { time, name } = this.refs;
+    const { date } = this.state;
+    if(this.isInputValid(name, time)) {
+      dispatch(addConferenceToRoom({
+        conferenceName: name.value.trim(),
+        conferenceDate: `${date.format("YYYY-MM-DD")} ${time.value}`,
+        participants: [],
+        roomId,
+      }, roomId));
+      this.handleCloseModal();
+    } else {
+      this.setState({
+        error: (
+          <div className="alert alert-danger" role="alert">
+            <strong>Oh no!</strong> Please check that all input fields are filled.
+          </div>
+        )
+      })
+    }
   }
 
   render() {
@@ -44,11 +62,17 @@ class ConferenceModal extends Component {
             className="modal-input"
             type="text"
             placeholder="Name" />
+          <input
+            ref="time"
+            className="modal-input"
+            type="time"
+            placeholder="Time" />
           <DatePicker
             className="modal-date"
             onChange={this.handleDateChange}
-            dateFormat="YYYY-MM-DD HH:mm"
+            dateFormat="YYYY-MM-DD"
             selected={this.state.date} />
+          {this.state.error}
           <div className="btn-group">
             <button
               onClick={event => this.handleSaveConference(event)}

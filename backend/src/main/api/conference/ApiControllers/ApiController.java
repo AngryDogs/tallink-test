@@ -34,32 +34,32 @@ public class ApiController {
     @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value="/rooms/{r_id}/conference/delete/{c_id}", method= RequestMethod.DELETE)
     @ResponseBody
-    public String deleteConferenceById(@PathVariable int r_id, @PathVariable int c_id) {
+    public ResponseEntity<String> deleteConferenceById(@PathVariable int r_id, @PathVariable int c_id) {
         new DbConferencesController().deleteConferenceById(c_id);
-        return "Deleted conference with id=" + c_id;
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value="/conference/add/", method= RequestMethod.POST)
     @ResponseBody
-    public String addConferenceToRoom(@RequestBody Map<String, Object> payload) {
+    public ResponseEntity<String> addConferenceToRoom(@RequestBody Map<String, Object> payload) {
         new DbRoomsController().addConferenceToRoom(payload);
-        return "Added new conference";
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value="/participant/delete/{id}", method= RequestMethod.DELETE)
     @ResponseBody
-    public String deleteConferenceById(@PathVariable int id) {
+    public ResponseEntity<String> deleteConferenceById(@PathVariable int id) {
         new DbParticipantsController().deleteParticipantById(id);
-        return "Deleted participant with id=" + id;
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value="/participant/add/", method= RequestMethod.POST)
     @ResponseBody
-    public String addParticipantToConference(@RequestBody Map<String, Object> payload) {
+    public ResponseEntity<String> addParticipantToConference(@RequestBody Map<String, Object> payload) {
         new DbParticipantsController().addParticipant(payload);
-        return "Participant was added";
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -19,7 +19,7 @@ class RoomConferences extends Component {
             <th>Id</th>
             <th>Name</th>
             <th>Datetime</th>
-            <th>Avalability</th>
+            <th>Availability</th>
             <th>Options</th>
           </tr>
         </thead>

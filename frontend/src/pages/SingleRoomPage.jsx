@@ -24,8 +24,8 @@ class SingleRoomPage extends Component {
   render() {
     const { showModal } = this.props.modalReducer;
     const { roomName, location, conferences, maxSeats } = this.props.roomReducer.currentRoom;
-    const body = roomName.length !== 0 ? (
-      <div className="custom-container">
+    const body = roomName !== undefined && roomName.length !== 0 ? (
+      <div>
         <h1>{roomName}</h1>
         <h4>{location}</h4>
         <RoomConferences maxSeats={maxSeats} data={conferences} />
@@ -42,7 +42,7 @@ class SingleRoomPage extends Component {
       <div>
         <Navbar />
         { modal }
-        <div className="container">
+        <div className="container custom-container">
           {body}
         </div>
       </div>

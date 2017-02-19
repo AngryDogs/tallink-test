@@ -12,7 +12,12 @@ class ParticipantModal extends Component {
     super(props);
     this.state = {
       date: moment(),
+      error: '',
     }
+  }
+
+  isInputValid(name) {
+    return name.value.length > 0;
   }
 
   handleDateChange = (date) => {
@@ -26,12 +31,23 @@ class ParticipantModal extends Component {
 
   handleSaveParticipant() {
     const { dispatch, conId, roomId } = this.props;
-    dispatch(addParticipantInConference({
-      participantName: this.refs.name.value.trim(),
-      participantDate: this.state.date.format('YYYY-MM-DD'),
-      conferenceId: conId,
-    }, roomId, conId));
-    this.handleCloseModal();
+    const { name } = this.refs;
+    if(this.isInputValid(name)) {
+      dispatch(addParticipantInConference({
+        participantName: name.value.trim(),
+        participantDate: this.state.date.format('YYYY-MM-DD'),
+        conferenceId: conId,
+      }, roomId, conId));
+      this.handleCloseModal();
+    } else {
+      this.setState({
+        error: (
+          <div className="alert alert-danger" role="alert">
+            <strong>Oh no!</strong> Please check that all input fields are filled.
+          </div>
+        )
+      })
+    }
   }
 
   render() {
@@ -49,6 +65,7 @@ class ParticipantModal extends Component {
             onChange={this.handleDateChange}
             dateFormat="YYYY-MM-DD"
             selected={this.state.date} />
+          {this.state.error}
           <div className="btn-group">
             <button
               onClick={event => this.handleSaveParticipant(event)}
