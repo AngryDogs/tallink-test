@@ -1,6 +1,7 @@
 package conference.DbControllers;
 
 import conference.Objects.Conference;
+import org.springframework.http.ResponseEntity;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,28 +9,14 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 /**
  * Created by rain on 16/02/2017.
  */
-public class DbConferencesController {
+public class DbConferencesController extends DbController{
 
-    private final String driver = "org.sqlite.JDBC";
-    private final String dbName = "database/database.db";
-    private final String dbUrl = "jdbc:sqlite:" + dbName;
-
-    private Optional<Connection> connect() {
-        try {
-            Class.forName(driver);
-            return Optional.of(DriverManager.getConnection(dbUrl));
-        } catch (Exception e) {
-            return Optional.empty();
-        }
-    }
-
-    private List<Conference> executeQuery(Connection connection, String query) {
+    private List<Conference> pullData(Connection connection, String query) {
         List<Conference> conferences = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
@@ -49,32 +36,23 @@ public class DbConferencesController {
         return conferences;
     }
 
-    private void updateQuery(Connection connection, String query) {
-        try{
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(query);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public Conference getConferenceById(int id) {
         Connection connection = connect().orElse(null);
         String query = "SELECT * FROM conferences WHERE conference_id=" + id;
-        List<Conference> conferences = executeQuery(connection, query);
+        List<Conference> conferences = pullData(connection, query);
         return  conferences.size() > 0 ? conferences.get(0) : null;
     }
 
     public List<Conference> getConferencesByRoomId(int id) {
         Connection connection = connect().orElse(null);
         String query = "SELECT * FROM conferences WHERE FK_room_id=" + id;
-        return executeQuery(connection, query);
+        return pullData(connection, query);
     }
 
-    public void deleteConferenceById(int id) {
+    public ResponseEntity<String> deleteConferenceById(int id) {
         Connection connection = connect().orElse(null);
         String query = "DELETE FROM conferences WHERE conference_id=" + id;
-        updateQuery(connection, query);
+        return updateDatabase(connection, query);
     }
 
 }

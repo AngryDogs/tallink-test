@@ -1,6 +1,7 @@
 package conference.DbControllers;
 
 import conference.Objects.Participant;
+import org.springframework.http.ResponseEntity;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,22 +15,10 @@ import java.util.Optional;
 /**
  * Created by rain on 16/02/2017.
  */
-public class DbParticipantsController {
+public class DbParticipantsController extends DbController {
 
-    private final String driver = "org.sqlite.JDBC";
-    private final String dbName = "database/database.db";
-    private final String dbUrl = "jdbc:sqlite:" + dbName;
 
-    private Optional<Connection> connect() {
-        try {
-            Class.forName(driver);
-            return Optional.of(DriverManager.getConnection(dbUrl));
-        } catch (Exception e) {
-            return Optional.empty();
-        }
-    }
-
-    private List<Participant> executeQuery(Connection connection, String query) {
+    private List<Participant> pullData(Connection connection, String query) {
         List<Participant> participants = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
@@ -49,33 +38,24 @@ public class DbParticipantsController {
         return participants;
     }
 
-    private void updateQuery(Connection connection, String query) {
-        try{
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(query);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public List<Participant> getParticipantByConferenceId(int id) {
         Connection connection = connect().orElse(null);
         String query = "SELECT * FROM participants WHERE FK_conference_id=" + id;
-        return executeQuery(connection, query);
+        return pullData(connection, query);
     }
 
-    public void deleteParticipantById(int id) {
+    public ResponseEntity<String> deleteParticipantById(int id) {
         Connection connection = connect().orElse(null);
         String query = "DELETE FROM participants WHERE participant_id=" + id;
-        updateQuery(connection, query);
+        return updateDatabase(connection, query);
     }
 
-    public void addParticipant(Map<String, Object> payload) {
+    public ResponseEntity<String> addParticipant(Map<String, Object> payload) {
         Connection connection = connect().orElse(null);
         String query = "INSERT INTO participants (name, birth_date, FK_conference_id) VALUES " +
                 "('" + payload.get("participantName").toString() + "', '" + payload.get("participantDate").toString() + "', " +
                 payload.get("conferenceId").toString()+ ");";
-        updateQuery(connection, query);
+        return updateDatabase(connection, query);
     }
 
 }

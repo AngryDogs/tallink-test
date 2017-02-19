@@ -1,9 +1,9 @@
 package conference.DbControllers;
 
 import conference.Objects.Room;
+import org.springframework.http.ResponseEntity;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -14,24 +14,9 @@ import java.util.Optional;
 /**
  * Created by rain on 16/02/2017.
  */
-public class DbRoomsController {
-    private final String driver = "org.sqlite.JDBC";
-    private final String dbName = "database/database.db";
-    private final String dbUrl = "jdbc:sqlite:" + dbName;
+public class DbRoomsController extends DbController {
 
-    public DbRoomsController() {
-    }
-
-    private Optional<Connection> connect() {
-        try {
-            Class.forName(driver);
-            return Optional.of(DriverManager.getConnection(dbUrl));
-        } catch (Exception e) {
-            return Optional.empty();
-        }
-    }
-
-    private List<Room> executeQuery(Connection connection, String query) {
+    private List<Room> pullData(Connection connection, String query) {
         List<Room> rooms = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
@@ -51,33 +36,24 @@ public class DbRoomsController {
         return rooms;
     }
 
-    private void updateQuery(Connection connection, String query) {
-        try{
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(query);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public List<Room> getRooms() {
         Connection connection = connect().orElse(null);
         String query = "SELECT * FROM rooms";
-        return  executeQuery(connection, query);
+        return  pullData(connection, query);
     }
 
     public Room getRoomById(int id) {
         Connection connection = connect().orElse(null);
         String query = "SELECT * FROM rooms WHERE room_id=" + id;
-        List<Room> rooms = executeQuery(connection, query);
+        List<Room> rooms = pullData(connection, query);
         return  rooms.size() > 0 ? rooms.get(0) : null;
     }
 
-    public void addConferenceToRoom(Map<String, Object> payload) {
+    public ResponseEntity<String> addConferenceToRoom(Map<String, Object> payload) {
         Connection connection = connect().orElse(null);
         String query = "INSERT INTO conferences (conference_name, date_time, FK_room_id) VALUES " +
                 "('" + payload.get("conferenceName").toString() + "', '" + payload.get("conferenceDate").toString() + "', " +
                 payload.get("roomId").toString()+ ");";
-        updateQuery(connection, query);
+        return updateDatabase(connection, query);
     }
 }

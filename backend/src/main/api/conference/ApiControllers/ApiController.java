@@ -35,31 +35,27 @@ public class ApiController {
     @RequestMapping(value="/rooms/{r_id}/conference/delete/{c_id}", method= RequestMethod.DELETE)
     @ResponseBody
     public ResponseEntity<String> deleteConferenceById(@PathVariable int r_id, @PathVariable int c_id) {
-        new DbConferencesController().deleteConferenceById(c_id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new DbConferencesController().deleteConferenceById(c_id);
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value="/conference/add/", method= RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<String> addConferenceToRoom(@RequestBody Map<String, Object> payload) {
-        new DbRoomsController().addConferenceToRoom(payload);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new DbRoomsController().addConferenceToRoom(payload);
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value="/participant/delete/{id}", method= RequestMethod.DELETE)
     @ResponseBody
     public ResponseEntity<String> deleteConferenceById(@PathVariable int id) {
-        new DbParticipantsController().deleteParticipantById(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new DbParticipantsController().deleteParticipantById(id);
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value="/participant/add/", method= RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<String> addParticipantToConference(@RequestBody Map<String, Object> payload) {
-        new DbParticipantsController().addParticipant(payload);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new DbParticipantsController().addParticipant(payload);
     }
 }
