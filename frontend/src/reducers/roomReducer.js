@@ -4,6 +4,7 @@ const initialState = {
     location: '',
     roomName: '',
     conferences: [],
+    maxSeats: 0,
   }
 };
 
@@ -19,6 +20,19 @@ export default function roomReducer(state = initialState, { type, ...action }) {
         ...state,
         currentRoom: action.result.data,
       }
+    case 'DELETE_CONFERENCE':
+      const newConferences = state.currentRoom.conferences.filter(el => {
+        return el.conferenceId !== action.conId;
+      });
+      return { ...state, currentRoom: {
+        ...state.currentRoom,
+        conferences: newConferences,
+      }};
+    case 'ADD_CONFERENCE':
+      state.currentRoom.conferences.push(action.payload);
+      return {
+        ...state,
+      };
     default:
       return state;
   }

@@ -1,13 +1,47 @@
-@import '~bootstrap/dist/css/bootstrap.min.css';
+@import "~bootstrap/dist/css/bootstrap.min.css";
+@import "~react-datepicker/dist/react-datepicker.css";
+@import "modal";
+@import "navbar";
+@import "table";
+
+body {
+  background-color: #f1f1f1;
+  border-radius: 3px;
+}
 
 .custom-container {
   margin-top: 150px;
+  border: 1px solid #f1f1f1;
+  padding: 50px 25px 100px 25px;
+  background: #fff;
 }
 
-.icon {
-
+.btn {
+  float: right;
+  background-color: #fff;
+  width: 100px;
+  color: #b19bf3;
+  border: 1px solid #b19bf3;
 }
 
-.icon-delete {
-  background: inline-image('./entypo/erase.svg');
+.btn-group {
+  margin-top: 23px;
+  float: right;
+}
+
+.btn:hover {
+  background-color: #b19bf3;
+  color: #fff;
+}
+
+.btn-cancel {
+  background-color: #fff;
+  margin-right: 5px;
+  color: #80261f;
+  border: 1px solid #80261f;
+}
+
+.btn-cancel:hover {
+  background-color: #80261f;
+  color: #fff;
 }

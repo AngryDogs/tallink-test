@@ -9,14 +9,10 @@ class ConferenceParticipants extends Component {
     this.props.dispatch(deleteParticipantInConference(id));
   }
 
-  componentWillReciveProps(nextProps) {
-    console.log(nextProps);
-  }
-
   render() {
     const { participants } = this.props.conferenceReducer;
     return (
-      <table className="table table-striped">
+      <table className="table table-hover">
         <thead>
           <tr>
             <th>Id</th>
@@ -33,9 +29,11 @@ class ConferenceParticipants extends Component {
                 <td>{el.participantName}</td>
                 <td>{el.participantDate}</td>
                 <td>
-                  <button onClick={event => this.handleDelete(event, el.participantId)}>
-                    Delete
-                  </button>
+                  <span
+                    onClick={event => this.handleDelete(event, el.participantId)}
+                    className="table-delete-btn">
+                    &#10006;
+                  </span>
                 </td>
               </tr>
             ))

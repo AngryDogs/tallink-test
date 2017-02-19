@@ -29,7 +29,25 @@ export function deleteConferenceById(roomId, conId) {
 }
 
 export function deleteParticipantById(id) {
-  return axios.delete('http://localhost:8080/participant/' + id)
+  return axios.delete('http://localhost:8080/participant/delete/' + id)
+  .catch(err => {
+    console.log(err);
+  });
+}
+
+export function addParticipant(payload) {
+  return axios.post('http://localhost:8080/participant/add/',{
+    ...payload,
+  })
+  .catch(err => {
+    console.log(err);
+  });
+}
+
+export function addConference(payload) {
+  return axios.post('http://localhost:8080/conference/add/',{
+    ...payload,
+  })
   .catch(err => {
     console.log(err);
   });

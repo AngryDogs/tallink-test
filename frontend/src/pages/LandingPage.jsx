@@ -18,7 +18,8 @@ class LandingPage extends Component {
       <div>
         <Navbar />
         <div className="container custom-container">
-           <AllRooms />
+          <h1>All rooms</h1>
+          <AllRooms />
         </div>
       </div>
     )

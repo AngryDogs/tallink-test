@@ -1,7 +1,7 @@
 CREATE TABLE `participants` (
 	`participant_id`	INTEGER PRIMARY KEY AUTOINCREMENT,
 	`name`	VARCHAR(255) NOT NULL,
-	`birth_date`	DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`birth_date`	DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`FK_conference_id`	INTEGER NOT NULL,
 	FOREIGN KEY(`FK_conference_id`) REFERENCES `conferences`(`conference_id`) ON DELETE CASCADE
 );

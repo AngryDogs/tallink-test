@@ -1,0 +1,31 @@
+.table td, th {
+   text-align: center !important;
+}
+
+.table {
+  margin-top: 50px;
+  border: 1px solid #f1f1f1;
+
+  a {
+    text-decoration: none;
+  }
+}
+
+.table-edit-btn {
+  margin-right: 15px;
+  font-size: 19px;
+  color: #b19bf3;
+}
+
+.table-delete-btn {
+  font-size: 19px;
+  color: #b19bf3;
+}
+
+.table-delete-btn:hover {
+    color: #80261f;
+}
+
+.table-edit-btn:hover {
+  color: #004f9b;
+}

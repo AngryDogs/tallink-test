@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -66,6 +67,14 @@ public class DbParticipantsController {
     public void deleteParticipantById(int id) {
         Connection connection = connect().orElse(null);
         String query = "DELETE FROM participants WHERE participant_id=" + id;
+        updateQuery(connection, query);
+    }
+
+    public void addParticipant(Map<String, Object> payload) {
+        Connection connection = connect().orElse(null);
+        String query = "INSERT INTO participants (name, birth_date, FK_conference_id) VALUES " +
+                "('" + payload.get("participantName").toString() + "', '" + payload.get("participantDate").toString() + "', " +
+                payload.get("conferenceId").toString()+ ");";
         updateQuery(connection, query);
     }
 

@@ -1,9 +1,14 @@
-import { getRoomById, getAllRooms } from '../connections/connections';
+import {
+  getRoomById,
+  getAllRooms,
+  deleteConferenceById,
+  addConference
+} from '../connections/connections';
 
-export const RECIVED_ROOM = 'RECIVED_ROOM';
-export const RECIVE_ROOMS = 'RECIVE_ROOMS';
-export const DELETE_ROOM = 'DELETE_ROOM';
-export const WAITING_DELETE = 'DELETE_ROOM';
+const RECIVED_ROOM = 'RECIVED_ROOM';
+const RECIVE_ROOMS = 'RECIVE_ROOMS';
+const DELETE_CONFERENCE = 'DELETE_CONFERENCE';
+const ADD_CONFERENCE = 'ADD_CONFERENCE';
 
 
 function room(result, type) {
@@ -19,7 +24,6 @@ export function singleRoom(id) {
     }
 }
 
-
 export function allRooms() {
   return dispatch => {
     getAllRooms()
@@ -27,4 +31,22 @@ export function allRooms() {
         dispatch(room(res, RECIVE_ROOMS))
       })
     }
+}
+
+export function addConferenceToRoom(payload, roomId) {
+  return dispatch => {
+    addConference(payload).then(res => {
+      dispatch({ type: ADD_CONFERENCE, payload });
+    }).then(res => {
+      getRoomById(roomId)
+        .then(res => {
+          dispatch(room(res, RECIVED_ROOM))
+        });
+    });
+  }
+}
+
+export function deleteConferenceFromRoom(roomId, conId) {
+  deleteConferenceById(roomId, conId);
+  return dispatch => dispatch({ type: DELETE_CONFERENCE, conId });
 }

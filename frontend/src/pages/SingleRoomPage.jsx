@@ -4,6 +4,8 @@ import { identity } from 'lodash';
 import { connect } from 'react-redux';
 import { singleRoom } from '../actions/roomActions';
 import RoomConferences from '../components/RoomConferences';
+import { changeModalStatus } from '../actions/modalAction';
+import ConferenceModal from '../components/ConferenceModal';
 
 class SingleRoomPage extends Component {
 
@@ -11,21 +13,36 @@ class SingleRoomPage extends Component {
     super(props);
     const { dispatch, params } = props;
     dispatch(singleRoom(params.id));
+    dispatch(changeModalStatus(true));
+  }
+
+  handleNewConference() {
+    const { dispatch } = this.props;
+    dispatch(changeModalStatus(false));
   }
 
   render() {
-    const { roomName, location, conferences } = this.props.roomReducer.currentRoom;
+    const { showModal } = this.props.modalReducer;
+    const { roomName, location, conferences, maxSeats } = this.props.roomReducer.currentRoom;
     const body = roomName.length !== 0 ? (
-      <div>
+      <div className="custom-container">
         <h1>{roomName}</h1>
         <h4>{location}</h4>
-        <RoomConferences data={conferences} />
+        <RoomConferences maxSeats={maxSeats} data={conferences} />
+        <button
+          className="btn"
+          onClick={event => this.handleNewConference(event)}>
+          Add new
+        </button>
       </div>
     ) : (<h1>Nothing to show here</h1>);
+    const modal = showModal ?
+      <ConferenceModal roomId={this.props.params.id}/> : '';
     return (
       <div>
         <Navbar />
-        <div className="container custom-container">
+        { modal }
+        <div className="container">
           {body}
         </div>
       </div>

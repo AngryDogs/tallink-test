@@ -1,6 +1,7 @@
 package conference.ApiControllers;
 
 import java.util.List;
+import java.util.Map;
 
 import conference.DbControllers.DbConferencesController;
 import conference.DbControllers.DbParticipantsController;
@@ -39,10 +40,26 @@ public class ApiController {
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
-    @RequestMapping(value="/participant/{id}", method= RequestMethod.DELETE)
+    @RequestMapping(value="/conference/add/", method= RequestMethod.POST)
+    @ResponseBody
+    public String addConferenceToRoom(@RequestBody Map<String, Object> payload) {
+        new DbRoomsController().addConferenceToRoom(payload);
+        return "Added new conference";
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @RequestMapping(value="/participant/delete/{id}", method= RequestMethod.DELETE)
     @ResponseBody
     public String deleteConferenceById(@PathVariable int id) {
         new DbParticipantsController().deleteParticipantById(id);
         return "Deleted participant with id=" + id;
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @RequestMapping(value="/participant/add/", method= RequestMethod.POST)
+    @ResponseBody
+    public String addParticipantToConference(@RequestBody Map<String, Object> payload) {
+        new DbParticipantsController().addParticipant(payload);
+        return "Participant was added";
     }
 }

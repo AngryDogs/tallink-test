@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -72,9 +73,11 @@ public class DbRoomsController {
         return  rooms.size() > 0 ? rooms.get(0) : null;
     }
 
-    public void deleteRoomById(int id) {
+    public void addConferenceToRoom(Map<String, Object> payload) {
         Connection connection = connect().orElse(null);
-        String query = "DELETE FROM rooms WHERE room_id=" + id;
+        String query = "INSERT INTO conferences (conference_name, date_time, FK_room_id) VALUES " +
+                "('" + payload.get("conferenceName").toString() + "', '" + payload.get("conferenceDate").toString() + "', " +
+                payload.get("roomId").toString()+ ");";
         updateQuery(connection, query);
     }
 }

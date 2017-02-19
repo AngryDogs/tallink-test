@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -75,4 +76,5 @@ public class DbConferencesController {
         String query = "DELETE FROM conferences WHERE conference_id=" + id;
         updateQuery(connection, query);
     }
+
 }

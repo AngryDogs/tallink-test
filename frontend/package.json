@@ -52,6 +52,8 @@
     "axios": "^0.15.3",
     "bootstrap": "4.0.0-alpha.6",
     "react": "^15.4.2",
+    "react-bootstrap-date-picker": "^4.0.0",
+    "react-datepicker": "^0.41.1",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.2",
     "react-router": "^3.0.2",

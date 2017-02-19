@@ -23,7 +23,8 @@ export default function conferenceReducer(state = initialState, { type, ...actio
         participants: newParticipants,
       };
     case 'ADD_PARTICIPANT':
-      return state;
+      state.participants.push(action.data);
+      return { ...state };
     default:
       return state;
   }
