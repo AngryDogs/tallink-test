@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.Optional;
 
@@ -25,10 +26,10 @@ public class DbController {
         }
     }
 
-    protected ResponseEntity<String> updateDatabase(Connection connection, String query) {
+    protected ResponseEntity<String> updateDatabase(Connection connection, PreparedStatement stmt) {
         try{
             Statement statement = connection.createStatement();
-            statement.executeUpdate(query);
+            stmt.executeUpdate();
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

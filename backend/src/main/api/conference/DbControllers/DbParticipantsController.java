@@ -1,12 +1,10 @@
 package conference.DbControllers;
 
 import conference.Objects.Participant;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -46,16 +44,28 @@ public class DbParticipantsController extends DbController {
 
     public ResponseEntity<String> deleteParticipantById(int id) {
         Connection connection = connect().orElse(null);
-        String query = "DELETE FROM participants WHERE participant_id=" + id;
-        return updateDatabase(connection, query);
+        String queryString = "DELETE FROM participants WHERE participant_id=?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(queryString);
+            stmt.setString(1, Integer.toString(id));
+            return updateDatabase(connection, stmt);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     public ResponseEntity<String> addParticipant(Map<String, Object> payload) {
         Connection connection = connect().orElse(null);
-        String query = "INSERT INTO participants (name, birth_date, FK_conference_id) VALUES " +
-                "('" + payload.get("participantName").toString() + "', '" + payload.get("participantDate").toString() + "', " +
-                payload.get("conferenceId").toString()+ ");";
-        return updateDatabase(connection, query);
+        String queryString = "INSERT INTO participants (name, birth_date, FK_conference_id) VALUES (?, ?, ?)";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(queryString);
+            stmt.setString(1, payload.get("participantName").toString());
+            stmt.setString(2, payload.get("participantDate").toString());
+            stmt.setString(3, payload.get("conferenceId").toString());
+            return updateDatabase(connection, stmt);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
 }

@@ -1,9 +1,11 @@
 package conference.DbControllers;
 
 import conference.Objects.Room;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -51,9 +53,15 @@ public class DbRoomsController extends DbController {
 
     public ResponseEntity<String> addConferenceToRoom(Map<String, Object> payload) {
         Connection connection = connect().orElse(null);
-        String query = "INSERT INTO conferences (conference_name, date_time, FK_room_id) VALUES " +
-                "('" + payload.get("conferenceName").toString() + "', '" + payload.get("conferenceDate").toString() + "', " +
-                payload.get("roomId").toString()+ ");";
-        return updateDatabase(connection, query);
+        String queryString = "INSERT INTO conferences (conference_name, date_time, FK_room_id) VALUES (?, ?, ?)";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(queryString);
+            stmt.setString(1, payload.get("conferenceName").toString());
+            stmt.setString(2, payload.get("conferenceDate").toString());
+            stmt.setString(3, payload.get("roomId").toString());
+            return updateDatabase(connection, stmt);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }

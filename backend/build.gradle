@@ -22,6 +22,10 @@ repositories {
     mavenCentral()
 }
 
+springBoot {
+    mainClass = "conference.Application"
+}
+
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 

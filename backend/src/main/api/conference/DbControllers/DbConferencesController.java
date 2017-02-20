@@ -1,12 +1,10 @@
 package conference.DbControllers;
 
 import conference.Objects.Conference;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -51,8 +49,13 @@ public class DbConferencesController extends DbController{
 
     public ResponseEntity<String> deleteConferenceById(int id) {
         Connection connection = connect().orElse(null);
-        String query = "DELETE FROM conferences WHERE conference_id=" + id;
-        return updateDatabase(connection, query);
+        String queryString = "DELETE FROM conferences WHERE conference_id=?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(queryString);
+            stmt.setString(1, Integer.toString(id));
+            return updateDatabase(connection, stmt);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
-
 }

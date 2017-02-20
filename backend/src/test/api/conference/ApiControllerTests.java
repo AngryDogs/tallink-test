@@ -3,10 +3,7 @@ package conference;
 /**
  * Created by rain on 19/02/2017.
  */
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
-import org.json.JSONArray;
-import org.junit.Assert;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -59,37 +56,39 @@ public class ApiControllerTests {
 
     @Test
     public void testGetConferenceByIdContent() throws Exception {
-        get("/rooms/13/conference/56").then().body("", hasKey("conferenceName")).
+        get("/rooms/13/conference/55").then().body("", hasKey("conferenceName")).
                 body("", hasKey("conferenceId")).
                 body("", hasKey("conferenceDate")).
                 body("", hasKey("roomId")).
                 body("", hasKey("participants"));
     }
-/*
+
     @Test
     public void testDeleteAddParticipant() throws Exception {
+        int size = get("/rooms/13/conference/55").then().extract().path("participants.size()");
         given()
                 .contentType("application/json")
-                .body("{ \"participantName\": \"Testuser\", \"participantDate\": \"2017-06-06\", \"conferenceId\": 56 }")
+                .body("{ \"participantName\": \"Testuser\", \"participantDate\": \"2017-06-06\", \"conferenceId\": 55 }")
                 .post("/participant/add/");
-        get("/rooms/13/conference/43").then().body("participants.size()", is(3));
-        String id = get("/rooms/13/conference/43").then().extract().
-                path("participants[0].participantId").toString();
+        get("/rooms/13/conference/55").then().body("participants.size()", is(size + 1));
+        String id = get("/rooms/13/conference/55").then().extract().
+                path("participants[-1].participantId").toString();
         delete("/participant/delete/" + id);
-        get("/rooms/13/conference/43").then().body("participants.size()", is(2));
+        get("/rooms/13/conference/55").then().body("participants.size()", is(size));
     }
 
     @Test
     public void testDeleteAddConference() throws Exception {
+        int size = get("/rooms/13/").then().extract().path("conferences.size()");
         given()
             .contentType("application/json")
             .body("{ \"conferenceName\": \"TestConference\", \"conferenceDate\": \"2017-06-06 13:13\", \"roomId\": 13 }")
-            .post("/conference/add/");
-        get("/rooms/13/").then().body("conferences.size()", is(3));
+            .post("/conference/add/").then().statusCode(200);
+        get("/rooms/13/").then().body("conferences.size()", is(size + 1));
         String id = get("/rooms/13/").then().extract().
-                path("conferences[0].conferenceId").toString();
+                path("conferences[-1].conferenceId").toString();
         delete("/rooms/13/conference/delete/" + id);
-        get("/rooms/13/").then().body("conferences.size()", is(2));
+        get("/rooms/13/").then().body("conferences.size()", is(size));
     }
-*/
+
 }
