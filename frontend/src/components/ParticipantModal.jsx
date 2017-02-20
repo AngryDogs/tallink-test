@@ -56,6 +56,7 @@ class ParticipantModal extends Component {
         <div className="custom-modal-content">
           <h1 className="modal-header">Add new participant</h1>
           <input
+            id="name"
             ref="name"
             className="modal-input"
             type="text"

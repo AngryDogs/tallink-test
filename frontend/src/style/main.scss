@@ -6,7 +6,6 @@
 
 body {
   background-color: #f1f1f1;
-  border-radius: 3px;
 }
 
 .custom-container {
@@ -14,6 +13,8 @@ body {
   border: 1px solid #f1f1f1;
   padding: 50px 25px 100px 25px;
   background: #fff;
+  box-shadow: 2px 2px 7px #d1d4d6;
+  border-radius: 5px;
 }
 
 .btn {
