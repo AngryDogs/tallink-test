@@ -5,7 +5,7 @@ To start backend server you are required to have gradle installed in your comput
 To start backend server.
 
 1) Go to backend folder in your terminal <br />
-2) Inset into terminal `./gradlew bootRun` <br />
+2) Insert into terminal `./gradlew bootRun` <br />
 3) This should install all the dependencies and start api as well <br />
 
 Testing
