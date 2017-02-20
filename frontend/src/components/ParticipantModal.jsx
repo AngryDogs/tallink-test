@@ -62,6 +62,7 @@ class ParticipantModal extends Component {
             type="text"
             placeholder="Name" />
           <DatePicker
+            maxDate={moment()}
             className="modal-date"
             onChange={this.handleDateChange}
             dateFormat="YYYY-MM-DD"

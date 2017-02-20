@@ -18,7 +18,7 @@ class AllRooms extends Component {
       <table className="table table-striped">
           <thead>
             <tr>
-              <th>Id</th>
+              <th>Nr</th>
               <th>Name</th>
               <th>Location</th>
               <th>Max seats</th>
@@ -28,8 +28,8 @@ class AllRooms extends Component {
           <tbody>
             {
               rooms.map((el, key) => (
-                <tr key={key}>
-                  <th scope="row">{key}</th>
+                <tr key={key + 1}>
+                  <th scope="row">{key + 1}</th>
                   <td>{el.roomName}</td>
                   <td>{el.location}</td>
                   <td>{el.maxSeats}</td>

@@ -4,10 +4,14 @@
 
 .table {
   margin-top: 50px;
-  border: 1px solid #f1f1f1;
 
   a {
     text-decoration: none;
+  }
+
+  tr, th, thead {
+    border: none;
+    border-bottom: 1px solid #eceeef !important;
   }
 }
 

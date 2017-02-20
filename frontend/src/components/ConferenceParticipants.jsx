@@ -15,7 +15,7 @@ class ConferenceParticipants extends Component {
       <table className="table table-hover">
         <thead>
           <tr>
-            <th>Id</th>
+            <th>Nr</th>
             <th>Name</th>
             <th>Birthdate</th>
             <th>Options</th>
@@ -24,8 +24,8 @@ class ConferenceParticipants extends Component {
         <tbody>
           {
             participants.map((el, key) => (
-              <tr key={key}>
-                <th scope="row">{key}</th>
+              <tr key={key + 1}>
+                <th scope="row">{key + 1}</th>
                 <td>{el.participantName}</td>
                 <td>{el.participantDate}</td>
                 <td>

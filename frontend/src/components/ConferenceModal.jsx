@@ -56,7 +56,7 @@ class ConferenceModal extends Component {
     return (
       <div className="custom-modal">
         <div className="custom-modal-content">
-          <h1 className="modal-header">Add new participant</h1>
+          <h1 className="modal-header">Add new conference</h1>
           <input
             ref="name"
             className="modal-input"
@@ -68,6 +68,7 @@ class ConferenceModal extends Component {
             type="time"
             placeholder="Time" />
           <DatePicker
+            minDate={moment()}
             className="modal-date"
             onChange={this.handleDateChange}
             dateFormat="YYYY-MM-DD"
