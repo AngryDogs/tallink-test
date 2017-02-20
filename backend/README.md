@@ -10,4 +10,4 @@ To start backend server.
 
 Testing
 
-To test the backend. Go to backend root folder and write `./gradlew` test into terminal.
+To test the backend. Go to backend root folder and write `./gradlew test` into terminal.
