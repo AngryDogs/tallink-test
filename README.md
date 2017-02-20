@@ -1,3 +1,3 @@
 # Tallink test work
 
-This is the test work for tallink.
+This is the test work for Tallink.
